@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo List — Dark Modern (Tailwind v4)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./output.css">
+</head>
+<body class="min-h-screen bg-bg-root text-text-primary font-['DM_Sans',sans-serif] font-normal leading-relaxed flex justify-center items-start pt-10 px-4 pb-20">
+
+  <main class="app w-full max-w-[620px] bg-bg-card border border-border rounded-2xl shadow-2xl shadow-black/40 (inset):shadow-accent/5 overflow-hidden animate-[cardIn_0.45s_cubic-bezier(0.16,1,0.3,1)_both]" role="main" aria-label="Todo List Aplikasi">
+
+    <header class="p-9 px-8 pb-7 border-b border-border bg-gradient-to-br from-[#1a1a28] to-[#16161f] relative overflow-hidden before:content-[''] before:absolute before:-top-10 before:-right-10 before:w-[180px] before:height-[180px] before:bg-accent/15 before:rounded-full before:blur-[60px] before:pointer-events-none">
+      <h1 class="font-['Syne',sans-serif] font-extrabold text-[clamp(1.6rem,4vw,2.2rem)] tracking-tight bg-gradient-to-r from-[#f0f0f6] to-[#9d97ff] bg-clip-text text-transparent leading-none">My Tasks</h1>
+      <p class="text-[0.85rem] text-text-muted mt-1.5 tracking-wide">Kelola tugas harianmu dengan rapi.</p>
+      <div class="inline-flex items-center gap-1.5 mt-4.5 py-1.5 px-3.5 bg-bg-input border border-border rounded-full text-[0.78rem] text-text-secondary font-medium" aria-live="polite">
+        <span class="dot w-1.75 h-1.75 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"></span>
+        <span id="task-count-text">0 tugas aktif</span>
+      </div>
+    </header>
+
+    <section class="p-7 px-8">
+
+      <div class="input-section mb-6">
+        <div class="input-row flex gap-2.5 items-stretch max-sm:flex-col">
+          <input
+            type="text"
+            id="todo-input"
+            class="todo-input flex-1 py-3 px-4.5 bg-bg-input border border-border rounded-lg color-text-primary text-[0.95rem] outline-none transition-all duration-200 focus:border-accent focus:shadow-[0_0_0_3px_rgba(108,99,255,0.25)] placeholder-text-muted [&.error]:border-danger [&.error]:shadow-[0_0_0_3px_rgba(255,77,109,0.2)]"
+            placeholder="Tambahkan tugas baru..."
+            aria-label="Input tugas baru"
+            autocomplete="off"
+          />
+          <button id="add-btn" class="btn btn-primary inline-flex items-center justify-center gap-1.75 py-2.75 px-5 border-none rounded-lg font-['Syne',sans-serif] font-semibold text-[0.88rem] cursor-pointer transition-all duration-200 whitespace-nowrap tracking-wide bg-accent text-white shadow-[0_4px_16px_rgba(108,99,255,0.25)] hover:bg-[#7c74ff] hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(108,99,255,0.25)] active:translate-y-0 max-sm:w-full" aria-label="Tambah tugas">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add
+          </button>
+        </div>
+        <p id="error-msg" class="error-msg hidden mt-1.75 text-[0.8rem] text-danger font-medium tracking-wide [&.visible]:block [&.visible]:animate-[shake_0.3s_ease]" role="alert">⚠ Input tidak boleh kosong!</p>
+      </div>
+
+      <nav class="filter-bar flex gap-1.5 mb-5 p-1.25 bg-bg-input rounded-lg border border-border" aria-label="Filter tugas">
+        <button class="filter-btn active flex-1 py-2 px-3 border-none rounded-md bg-transparent text-text-secondary font-['Syne',sans-serif] font-semibold text-[0.8rem] tracking-wider uppercase cursor-pointer transition-all duration-200 hover:text-text-primary hover:bg-bg-hover [&.active]:bg-accent [&.active]:text-white [&.active]:shadow-[0_2px_12px_rgba(108,99,255,0.25)]" data-filter="all">All</button>
+        <button class="filter-btn flex-1 py-2 px-3 border-none rounded-md bg-transparent text-text-secondary font-['Syne',sans-serif] font-semibold text-[0.8rem] tracking-wider uppercase cursor-pointer transition-all duration-200 hover:text-text-primary hover:bg-bg-hover [&.active]:bg-accent [&.active]:text-white [&.active]:shadow-[0_2px_12px_rgba(108,99,255,0.25)]" data-filter="active">Active</button>
+        <button class="filter-btn flex-1 py-2 px-3 border-none rounded-md bg-transparent text-text-secondary font-['Syne',sans-serif] font-semibold text-[0.8rem] tracking-wider uppercase cursor-pointer transition-all duration-200 hover:text-text-primary hover:bg-bg-hover [&.active]:bg-accent [&.active]:text-white [&.active]:shadow-[0_2px_12px_rgba(108,99,255,0.25)]" data-filter="completed">Completed</button>
+      </nav>
+
+      <ul class="todo-list list-none flex flex-col gap-2.5 min-h-[60px]" id="todo-list" aria-live="polite" aria-label="Daftar tugas"></ul>
+
+    </section>
+
+    <footer class="app-footer flex items-center justify-between py-3.5 px-8 border-t border-border bg-[#12121a] max-sm:flex-col max-sm:gap-2.5 max-sm:text-center">
+      <span class="footer-info text-[0.78rem] text-text-muted" id="footer-info">0 tugas tersisa</span>
+      <button class="btn-clear-done py-1.75 px-3.5 bg-transparent border border-[#3a1e25] rounded-md text-danger font-['Syne',sans-serif] text-[0.75rem] font-semibold tracking-wider cursor-pointer transition-all duration-200 hover:bg-danger hover:text-white" id="clear-done-btn" aria-label="Hapus semua tugas selesai">
+        🗑 Hapus Selesai
+      </button>
+    </footer>
+
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

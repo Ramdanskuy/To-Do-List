@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  /* Mendaftarkan konfigurasi warna kustom Anda */
+  --color-bg-root: #0d0d12;
+  --color-bg-card: #16161f;
+  --color-bg-input: #1e1e2a;
+  --color-bg-hover: #252533;
+  --color-border: #2a2a3a;
+  --color-accent: #6c63ff;
+  --color-accent-2: #00e5c3;
+  --color-danger: #ff4d6d;
+  --color-done-text: #4ade80;
+
+  --color-text-primary: #f0f0f6;
+  --color-text-secondary: #8888a8;
+  --color-text-muted: #55556a;
+}
+
+/* Kustom Keyframes Animasi */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes itemIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-5px); }
+  75%      { transform: translateX(5px); }
+}
